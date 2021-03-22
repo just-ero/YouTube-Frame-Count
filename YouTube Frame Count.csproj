@@ -110,6 +110,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="Resources\clipboard.png" />
   </ItemGroup>
   <ItemGroup>
