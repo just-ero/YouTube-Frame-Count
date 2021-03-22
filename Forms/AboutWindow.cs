@@ -35,6 +35,6 @@ namespace YTFC
             base.WndProc(ref m);
         }
 
-        private void CreditsLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => Process.Start("http://github.com");
+        private void CreditsLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => Process.Start("http://github.com/just-ero/YouTube-Frame-Count");
     }
 }

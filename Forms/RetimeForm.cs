@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
@@ -20,7 +21,7 @@ namespace YTFC
                 webClient.Headers.Add("User-Agent", "refunct-tas");
 
                 string tagEntry = "\"tag_name\":";
-                string repo = "/oberien/refunct-tas/releases/latest";
+                string repo = "/just-ero/YouTube-Frame-Count/releases/latest";
                 string json = webClient.DownloadString("https://api.github.com/repos" + repo);
                 string newVersion = json.Substring(json.IndexOf(tagEntry) + tagEntry.Length + 2, 3);
 
@@ -36,8 +37,9 @@ namespace YTFC
             catch { }
         }
 
-        private float EnteredStartTime, EnteredEndTime, CalculatedDelta;
+        private float EnteredStartTime, EnteredEndTime, DeltaNoOffset, DeltaOffset;
         private string StartVideoID, EndVideoID;
+        private int EnteredFPS;
 
         private void StartEnd_KeyDown(object sender, KeyEventArgs e)
         {
@@ -50,6 +52,7 @@ namespace YTFC
             {
                 EnteredStartTime = DebugData["seconds"] - (DebugData["seconds"] % (1f / (float)DebugData["fps"]));
                 StartVideoID = DebugData["vidID"];
+                EnteredFPS = DebugData["fps"];
 
                 if (!String.IsNullOrEmpty(EndVideoID) && StartVideoID != EndVideoID) return;
                 if (String.IsNullOrEmpty(VideoLink.Text))
@@ -64,6 +67,7 @@ namespace YTFC
             {
                 EnteredEndTime = DebugData["seconds"] - (DebugData["seconds"] % (1f / (float)DebugData["fps"]));
                 EndVideoID = DebugData["vidID"];
+                EnteredFPS = DebugData["fps"];
 
                 if (!String.IsNullOrEmpty(StartVideoID) && StartVideoID != EndVideoID) return;
                 if (String.IsNullOrEmpty(VideoLink.Text))
@@ -77,15 +81,19 @@ namespace YTFC
 
             if (new[] { StartTime.Text, EndTime.Text }.All(text => !String.IsNullOrEmpty(text)))
             {
-                CalculatedDelta = EnteredEndTime - EnteredStartTime;
-                DeltaTime.Text = FormatToTime(CalculatedDelta);
+                DeltaNoOffset = EnteredEndTime - EnteredStartTime;
+                DeltaOffset = DeltaNoOffset + (float)Offset.Value;
+                DeltaTime.Text = FormatToTime(DeltaOffset);
+
+                Offset.Minimum = (decimal)-DeltaNoOffset;
+                Offset.Maximum = (decimal)(43200 - DeltaNoOffset);
             }
         }
 
         private void TimeFormat_CheckedChanged(object sender, EventArgs e)
         {
             TextBox[] tBoxes = { StartTime, EndTime, DeltaTime };
-            float[] values = { EnteredStartTime, EnteredEndTime, CalculatedDelta };
+            float[] values = { EnteredStartTime, EnteredEndTime, DeltaOffset };
 
             for (int i = 0; i < tBoxes.Length; ++i)
                 if (!String.IsNullOrEmpty(tBoxes[i].Text))
@@ -100,11 +108,14 @@ namespace YTFC
 
         private void ClearAll_Click(object sender, EventArgs e)
         {
-            EnteredStartTime = EnteredEndTime = CalculatedDelta = 0;
+            EnteredStartTime = EnteredEndTime = DeltaNoOffset = DeltaOffset = 0;
 
             StartTime.Clear();
             EndTime.Clear();
             DeltaTime.Clear();
+            Offset.Value = (decimal)0.000;
+            Offset.Minimum = 0;
+            Offset.Maximum = 43200;
             VideoLink.Text = String.Empty;
             VideoLink.Visible = false;
         }
@@ -124,7 +135,16 @@ namespace YTFC
             {
                 try
                 {
-                    Clipboard.SetText(DeltaTime.Text);
+                    if (!File.Exists("YTFCMessage.txt")) File.WriteAllText("YTFCMessage.txt", "Mod note: Retimed to $delta$ (from $start$ to $end$ at $fps$ FPS).");
+                    string clip = File.ReadAllText("YTFCMessage.txt");
+
+                    if (clip.Contains("$start$")) clip = clip.Replace("$start$", StartTime.Text);
+                    if (clip.Contains("$end$")) clip = clip.Replace("$end$", EndTime.Text);
+                    if (clip.Contains("$delta$")) clip = clip.Replace("$delta$", DeltaTime.Text);
+                    if (clip.Contains("$fps$")) clip = clip.Replace("$fps$", EnteredFPS.ToString());
+                    if (clip.Contains("$offset$")) clip = clip.Replace("$offset$", Offset.Value.ToString("0.000"));
+
+                    Clipboard.SetText(clip);
                 }
                 catch { }
 
@@ -132,6 +152,13 @@ namespace YTFC
 
                 return;
             }
+        }
+
+        private void Offset_ValueChanged(object sender, EventArgs e)
+        {
+            DeltaOffset = DeltaNoOffset + (float)Offset.Value;
+
+            DeltaTime.Text = FormatToTime(DeltaOffset);
         }
 
         private void VideoLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => Process.Start($"http://{VideoLink.Text}");
