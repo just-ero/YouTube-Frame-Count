@@ -18,7 +18,7 @@ namespace YTFC
             try
             {
                 WebClient webClient = new WebClient();
-                webClient.Headers.Add("User-Agent", "refunct-tas");
+                webClient.Headers.Add("User-Agent", "YTFC");
 
                 string tagEntry = "\"tag_name\":";
                 string repo = "/just-ero/YouTube-Frame-Count/releases/latest";
