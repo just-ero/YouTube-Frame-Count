@@ -42,9 +42,9 @@ namespace YTFC
             System.Windows.Forms.Label CustomMessage;
             System.Windows.Forms.Button ClipboardButton;
             System.Windows.Forms.Panel CustomMessageBox;
+            System.Windows.Forms.Label Parameters;
             System.Windows.Forms.Panel UIBox;
             System.Windows.Forms.Panel InstructionsBox;
-            System.Windows.Forms.Label Parameters;
             this.CreditsLabel = new System.Windows.Forms.LinkLabel();
             Instructions = new System.Windows.Forms.Label();
             InstructionsHeader = new System.Windows.Forms.Label();
@@ -58,9 +58,9 @@ namespace YTFC
             CustomMessage = new System.Windows.Forms.Label();
             ClipboardButton = new System.Windows.Forms.Button();
             CustomMessageBox = new System.Windows.Forms.Panel();
+            Parameters = new System.Windows.Forms.Label();
             UIBox = new System.Windows.Forms.Panel();
             InstructionsBox = new System.Windows.Forms.Panel();
-            Parameters = new System.Windows.Forms.Label();
             CustomMessageBox.SuspendLayout();
             UIBox.SuspendLayout();
             InstructionsBox.SuspendLayout();
@@ -165,10 +165,10 @@ namespace YTFC
             CustomMessage.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             CustomMessage.Location = new System.Drawing.Point(5, 25);
             CustomMessage.Name = "CustomMessage";
-            CustomMessage.Size = new System.Drawing.Size(296, 45);
+            CustomMessage.Size = new System.Drawing.Size(300, 45);
             CustomMessage.TabIndex = 0;
-            CustomMessage.Text = "Define a custom message in you YTRCMessage file.\r\nCopy this message by clicking t" +
-    "he clipboard twice.\r\nYou can use these parameters in the message:";
+            CustomMessage.Text = "Define a custom message in your YTRCMessage file.\r\nCopy this message by clicking " +
+    "the clipboard twice.\r\nYou can use these parameters in the message:";
             // 
             // ClipboardButton
             // 
@@ -194,6 +194,17 @@ namespace YTFC
             CustomMessageBox.Size = new System.Drawing.Size(308, 109);
             CustomMessageBox.TabIndex = 0;
             // 
+            // Parameters
+            // 
+            Parameters.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            Parameters.ForeColor = System.Drawing.SystemColors.Highlight;
+            Parameters.Location = new System.Drawing.Point(5, 85);
+            Parameters.Name = "Parameters";
+            Parameters.Size = new System.Drawing.Size(296, 15);
+            Parameters.TabIndex = 0;
+            Parameters.Text = "$start$, $end$, $delta$, $fps$, and $offset$";
+            Parameters.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // UIBox
             // 
             UIBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -218,17 +229,6 @@ namespace YTFC
             InstructionsBox.Name = "InstructionsBox";
             InstructionsBox.Size = new System.Drawing.Size(308, 109);
             InstructionsBox.TabIndex = 0;
-            // 
-            // Parameters
-            // 
-            Parameters.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            Parameters.ForeColor = System.Drawing.SystemColors.Highlight;
-            Parameters.Location = new System.Drawing.Point(5, 85);
-            Parameters.Name = "Parameters";
-            Parameters.Size = new System.Drawing.Size(296, 15);
-            Parameters.TabIndex = 0;
-            Parameters.Text = "$start$, $end$, $delta$, $fps$, and $offset$";
-            Parameters.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // CreditsLabel
             // 
