@@ -43,15 +43,18 @@ namespace YTFC
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ClearAll = new System.Windows.Forms.Button();
             this.About = new System.Windows.Forms.Button();
-            this.CopyToClipboard = new System.Windows.Forms.Button();
             this.NewVersion = new System.Windows.Forms.LinkLabel();
             this.Offset = new System.Windows.Forms.NumericUpDown();
+            this.CopyToClipboard = new System.Windows.Forms.Button();
+            this.ContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ContextMenuCopyLink = new System.Windows.Forms.ToolStripMenuItem();
             DeltaTimeLabel = new System.Windows.Forms.Label();
             EndTimeLabel = new System.Windows.Forms.Label();
             StartTimeLabel = new System.Windows.Forms.Label();
             Separator = new System.Windows.Forms.Panel();
             OffsetLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Offset)).BeginInit();
+            this.ContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // DeltaTimeLabel
@@ -182,18 +185,6 @@ namespace YTFC
             this.About.UseVisualStyleBackColor = false;
             this.About.Click += new System.EventHandler(this.About_Click);
             // 
-            // CopyToClipboard
-            // 
-            this.CopyToClipboard.BackgroundImage = global::YTFC.Properties.Resources.clipboard;
-            this.CopyToClipboard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.CopyToClipboard.Location = new System.Drawing.Point(202, 92);
-            this.CopyToClipboard.Name = "CopyToClipboard";
-            this.CopyToClipboard.Size = new System.Drawing.Size(28, 28);
-            this.CopyToClipboard.TabIndex = 8;
-            this.CopyToClipboard.Tag = "";
-            this.CopyToClipboard.UseVisualStyleBackColor = true;
-            this.CopyToClipboard.Click += new System.EventHandler(this.CopyToClipboard_Click);
-            // 
             // NewVersion
             // 
             this.NewVersion.ActiveLinkColor = System.Drawing.Color.Crimson;
@@ -225,6 +216,33 @@ namespace YTFC
             this.Offset.TabIndex = 9;
             this.ToolTip.SetToolTip(this.Offset, "Optional offset (plus or minus) to the delta.");
             this.Offset.ValueChanged += new System.EventHandler(this.Offset_ValueChanged);
+            // 
+            // CopyToClipboard
+            // 
+            this.CopyToClipboard.BackgroundImage = global::YTFC.Properties.Resources.clipboard;
+            this.CopyToClipboard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CopyToClipboard.Location = new System.Drawing.Point(202, 92);
+            this.CopyToClipboard.Name = "CopyToClipboard";
+            this.CopyToClipboard.Size = new System.Drawing.Size(28, 28);
+            this.CopyToClipboard.TabIndex = 8;
+            this.CopyToClipboard.Tag = "";
+            this.CopyToClipboard.UseVisualStyleBackColor = true;
+            this.CopyToClipboard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CopyToClipboard_MouseDown);
+            this.CopyToClipboard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CopyToClipboard_MouseUp);
+            // 
+            // ContextMenu
+            // 
+            this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ContextMenuCopyLink});
+            this.ContextMenu.Name = "ContextMenu";
+            this.ContextMenu.Size = new System.Drawing.Size(181, 48);
+            // 
+            // ContextMenuCopyLink
+            // 
+            this.ContextMenuCopyLink.Name = "ContextMenuCopyLink";
+            this.ContextMenuCopyLink.Size = new System.Drawing.Size(180, 22);
+            this.ContextMenuCopyLink.Text = "Copy Link";
+            this.ContextMenuCopyLink.Click += new System.EventHandler(this.ContextMenuCopyLink_Click);
             // 
             // RetimeForm
             // 
@@ -259,6 +277,7 @@ namespace YTFC
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YouTube Frame Count";
             ((System.ComponentModel.ISupportInitialize)(this.Offset)).EndInit();
+            this.ContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,6 +295,8 @@ namespace YTFC
         private System.Windows.Forms.Button About;
         private System.Windows.Forms.LinkLabel NewVersion;
         private System.Windows.Forms.NumericUpDown Offset;
+        private System.Windows.Forms.ContextMenuStrip ContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem ContextMenuCopyLink;
     }
 }
 

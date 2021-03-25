@@ -27,8 +27,7 @@ namespace YTFC
             {
                 case WM_SYSCOMMAND:
                     int command = m.WParam.ToInt32() & 0xFFF0;
-                    if (command == SC_MOVE)
-                        return;
+                    if (command == SC_MOVE) return;
                     break;
             }
 

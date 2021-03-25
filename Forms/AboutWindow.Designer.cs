@@ -144,10 +144,10 @@ namespace YTFC
             ClipboardExplanation.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             ClipboardExplanation.Location = new System.Drawing.Point(29, 72);
             ClipboardExplanation.Name = "ClipboardExplanation";
-            ClipboardExplanation.Size = new System.Drawing.Size(231, 30);
+            ClipboardExplanation.Size = new System.Drawing.Size(263, 30);
             ClipboardExplanation.TabIndex = 0;
-            ClipboardExplanation.Text = ": copy delta to clipboard (second click will\r\n  copy the formatted custom message" +
-    ")";
+            ClipboardExplanation.Text = ": copy delta to clipboard (right-click will copy the\r\n  formatted custom message)" +
+    "";
             // 
             // CustomMessageHeader
             // 
@@ -167,8 +167,8 @@ namespace YTFC
             CustomMessage.Name = "CustomMessage";
             CustomMessage.Size = new System.Drawing.Size(300, 45);
             CustomMessage.TabIndex = 0;
-            CustomMessage.Text = "Define a custom message in your YTRCMessage file.\r\nCopy this message by clicking " +
-    "the clipboard twice.\r\nYou can use these parameters in the message:";
+            CustomMessage.Text = "Define a custom message in your YTRCMessage file.\r\nCopy this message by right-cli" +
+    "cking the clipboard.\r\nYou can use these parameters in the message:";
             // 
             // ClipboardButton
             // 
@@ -240,7 +240,7 @@ namespace YTFC
             this.CreditsLabel.Size = new System.Drawing.Size(146, 28);
             this.CreditsLabel.TabIndex = 1;
             this.CreditsLabel.TabStop = true;
-            this.CreditsLabel.Text = "YouTube Frame Count (v1.0)\r\nCreated by Ero";
+            this.CreditsLabel.Text = "YouTube Frame Count (v1.1)\r\nCreated by Ero";
             this.CreditsLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.CreditsLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CreditsLabel_LinkClicked);
             // 

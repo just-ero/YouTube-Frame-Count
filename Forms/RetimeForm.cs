@@ -13,7 +13,8 @@ namespace YTFC
         public RetimeForm()
         {
             InitializeComponent();
-            CopyToClipboard.Tag = false;
+
+            VideoLink.ContextMenuStrip = ContextMenu;
 
             try
             {
@@ -120,38 +121,34 @@ namespace YTFC
             VideoLink.Visible = false;
         }
 
-        private void CopyToClipboard_Click(object sender, EventArgs e)
+        private void CopyToClipboard_MouseDown(object sender, MouseEventArgs e)
         {
             if (String.IsNullOrEmpty(DeltaTime.Text)) return;
 
-            if ((bool)(CopyToClipboard.Tag = !(bool)CopyToClipboard.Tag))
+            if (e.Button == MouseButtons.Left)
             {
                 Clipboard.SetText(DeltaTime.Text);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
                 CopyToClipboard.BackgroundImage = Properties.Resources.mod;
 
-                return;
+                if (!File.Exists("YTFCMessage.txt")) File.WriteAllText("YTFCMessage.txt", "Mod note: Retimed to $delta$ (from $start$ to $end$ at $fps$ FPS).");
+                string msg = File.ReadAllText("YTFCMessage.txt");
+
+                if (msg.Contains("$start$")) msg = msg.Replace("$start$", StartTime.Text);
+                if (msg.Contains("$end$")) msg = msg.Replace("$end$", EndTime.Text);
+                if (msg.Contains("$delta$")) msg = msg.Replace("$delta$", DeltaTime.Text);
+                if (msg.Contains("$fps$")) msg = msg.Replace("$fps$", EnteredFPS.ToString());
+                if (msg.Contains("$offset$")) msg = msg.Replace("$offset$", Offset.Value.ToString("0.000"));
+
+                Clipboard.SetText(msg);
             }
-            else
-            {
-                try
-                {
-                    if (!File.Exists("YTFCMessage.txt")) File.WriteAllText("YTFCMessage.txt", "Mod note: Retimed to $delta$ (from $start$ to $end$ at $fps$ FPS).");
-                    string clip = File.ReadAllText("YTFCMessage.txt");
+        }
 
-                    if (clip.Contains("$start$")) clip = clip.Replace("$start$", StartTime.Text);
-                    if (clip.Contains("$end$")) clip = clip.Replace("$end$", EndTime.Text);
-                    if (clip.Contains("$delta$")) clip = clip.Replace("$delta$", DeltaTime.Text);
-                    if (clip.Contains("$fps$")) clip = clip.Replace("$fps$", EnteredFPS.ToString());
-                    if (clip.Contains("$offset$")) clip = clip.Replace("$offset$", Offset.Value.ToString("0.000"));
-
-                    Clipboard.SetText(clip);
-                }
-                catch { }
-
-                CopyToClipboard.BackgroundImage = Properties.Resources.clipboard;
-
-                return;
-            }
+        private void CopyToClipboard_MouseUp(object sender, MouseEventArgs e)
+        {
+            CopyToClipboard.BackgroundImage = Properties.Resources.clipboard;
         }
 
         private void Offset_ValueChanged(object sender, EventArgs e)
@@ -161,6 +158,14 @@ namespace YTFC
             DeltaTime.Text = FormatToTime(DeltaOffset);
         }
 
-        private void VideoLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => Process.Start($"http://{VideoLink.Text}");
+        private void VideoLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) Process.Start($"http://{VideoLink.Text}");
+        }
+
+        private void ContextMenuCopyLink_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(VideoLink.Text);
+        }
     }
 }

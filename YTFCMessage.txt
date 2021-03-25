@@ -1,1 +1,1 @@
-Mod note: Retimed to $delta$ when accounted for a $offset$ second offset (from $start$ to $end$ at $fps$ FPS).
+Mod note: Retimed to $delta$ (from $start$ to $end$ at $fps$ FPS).
