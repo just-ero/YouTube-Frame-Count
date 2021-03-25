@@ -117,7 +117,7 @@
     <None Include="Resources\mod.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="YTFCMessage.txt">
+    <Content Include="YTFC_custom.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

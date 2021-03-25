@@ -124,11 +124,10 @@
     <value>True</value>
   </metadata>
   <data name="Instructions.Text" xml:space="preserve">
-    <value>1. Find your desired start frame using the , and . keys.
+    <value>1. Find your video's frames using the , and . keys.
 2. Right click the video and click 'Copy debug info'.
 3. Paste (Ctrl + V) it into the appropriate text field.
-4. Do the same for the end frame.
-5. Click the clipboard to copy the time.</value>
+4. Click the clipboard to copy the time.</value>
   </data>
   <metadata name="InstructionsHeader.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -194,12 +193,6 @@
     <value>False</value>
   </metadata>
   <metadata name="CustomMessageBox.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Parameters.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
-  <metadata name="Parameters.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="Parameters.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

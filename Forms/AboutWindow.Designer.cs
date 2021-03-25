@@ -72,7 +72,7 @@ namespace YTFC
             Instructions.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             Instructions.Location = new System.Drawing.Point(5, 25);
             Instructions.Name = "Instructions";
-            Instructions.Size = new System.Drawing.Size(298, 75);
+            Instructions.Size = new System.Drawing.Size(278, 60);
             Instructions.TabIndex = 0;
             Instructions.Text = resources.GetString("Instructions.Text");
             // 
@@ -82,7 +82,7 @@ namespace YTFC
             InstructionsHeader.Location = new System.Drawing.Point(1, 1);
             InstructionsHeader.Name = "InstructionsHeader";
             InstructionsHeader.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            InstructionsHeader.Size = new System.Drawing.Size(304, 105);
+            InstructionsHeader.Size = new System.Drawing.Size(292, 90);
             InstructionsHeader.TabIndex = 0;
             InstructionsHeader.Text = "Instructions";
             // 
@@ -102,7 +102,7 @@ namespace YTFC
             UIHeader.Location = new System.Drawing.Point(1, 1);
             UIHeader.Name = "UIHeader";
             UIHeader.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            UIHeader.Size = new System.Drawing.Size(304, 105);
+            UIHeader.Size = new System.Drawing.Size(292, 105);
             UIHeader.TabIndex = 0;
             UIHeader.Text = "UI Elements";
             // 
@@ -144,9 +144,9 @@ namespace YTFC
             ClipboardExplanation.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             ClipboardExplanation.Location = new System.Drawing.Point(29, 72);
             ClipboardExplanation.Name = "ClipboardExplanation";
-            ClipboardExplanation.Size = new System.Drawing.Size(263, 30);
+            ClipboardExplanation.Size = new System.Drawing.Size(243, 30);
             ClipboardExplanation.TabIndex = 0;
-            ClipboardExplanation.Text = ": copy delta to clipboard (right-click will copy the\r\n  formatted custom message)" +
+            ClipboardExplanation.Text = ": copy delta to clipboard (right-click will copy\r\n  the formatted custom message)" +
     "";
             // 
             // CustomMessageHeader
@@ -155,7 +155,7 @@ namespace YTFC
             CustomMessageHeader.Location = new System.Drawing.Point(1, 1);
             CustomMessageHeader.Name = "CustomMessageHeader";
             CustomMessageHeader.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            CustomMessageHeader.Size = new System.Drawing.Size(304, 105);
+            CustomMessageHeader.Size = new System.Drawing.Size(292, 105);
             CustomMessageHeader.TabIndex = 0;
             CustomMessageHeader.Text = "Custom Message";
             // 
@@ -165,10 +165,10 @@ namespace YTFC
             CustomMessage.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             CustomMessage.Location = new System.Drawing.Point(5, 25);
             CustomMessage.Name = "CustomMessage";
-            CustomMessage.Size = new System.Drawing.Size(300, 45);
+            CustomMessage.Size = new System.Drawing.Size(285, 45);
             CustomMessage.TabIndex = 0;
-            CustomMessage.Text = "Define a custom message in your YTRCMessage file.\r\nCopy this message by right-cli" +
-    "cking the clipboard.\r\nYou can use these parameters in the message:";
+            CustomMessage.Text = "Define some custom text in your YTFC_custom file.\r\nCopy this message by right-cli" +
+    "cking the clipboard.\r\nYou can use these parameters in the file:";
             // 
             // ClipboardButton
             // 
@@ -189,9 +189,9 @@ namespace YTFC
             CustomMessageBox.Controls.Add(Parameters);
             CustomMessageBox.Controls.Add(CustomMessage);
             CustomMessageBox.Controls.Add(CustomMessageHeader);
-            CustomMessageBox.Location = new System.Drawing.Point(7, 123);
+            CustomMessageBox.Location = new System.Drawing.Point(7, 108);
             CustomMessageBox.Name = "CustomMessageBox";
-            CustomMessageBox.Size = new System.Drawing.Size(308, 109);
+            CustomMessageBox.Size = new System.Drawing.Size(296, 109);
             CustomMessageBox.TabIndex = 0;
             // 
             // Parameters
@@ -215,9 +215,9 @@ namespace YTFC
             UIBox.Controls.Add(RedExplanation);
             UIBox.Controls.Add(GrayExplanation);
             UIBox.Controls.Add(UIHeader);
-            UIBox.Location = new System.Drawing.Point(7, 238);
+            UIBox.Location = new System.Drawing.Point(7, 223);
             UIBox.Name = "UIBox";
-            UIBox.Size = new System.Drawing.Size(308, 109);
+            UIBox.Size = new System.Drawing.Size(296, 109);
             UIBox.TabIndex = 0;
             // 
             // InstructionsBox
@@ -227,7 +227,7 @@ namespace YTFC
             InstructionsBox.Controls.Add(InstructionsHeader);
             InstructionsBox.Location = new System.Drawing.Point(7, 8);
             InstructionsBox.Name = "InstructionsBox";
-            InstructionsBox.Size = new System.Drawing.Size(308, 109);
+            InstructionsBox.Size = new System.Drawing.Size(296, 94);
             InstructionsBox.TabIndex = 0;
             // 
             // CreditsLabel
@@ -235,7 +235,7 @@ namespace YTFC
             this.CreditsLabel.ActiveLinkColor = System.Drawing.Color.Crimson;
             this.CreditsLabel.AutoSize = true;
             this.CreditsLabel.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreditsLabel.Location = new System.Drawing.Point(171, 352);
+            this.CreditsLabel.Location = new System.Drawing.Point(159, 337);
             this.CreditsLabel.Name = "CreditsLabel";
             this.CreditsLabel.Size = new System.Drawing.Size(146, 28);
             this.CreditsLabel.TabIndex = 1;
@@ -250,7 +250,7 @@ namespace YTFC
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(323, 386);
+            this.ClientSize = new System.Drawing.Size(311, 371);
             this.Controls.Add(this.CreditsLabel);
             this.Controls.Add(InstructionsBox);
             this.Controls.Add(UIBox);
