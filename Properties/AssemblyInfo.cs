@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("YouTube Frame Count")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A tool made for timing sections of YouTube videos by frames.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Ero")]
 [assembly: AssemblyProduct("YouTube Frame Count")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
