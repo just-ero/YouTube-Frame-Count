@@ -133,8 +133,8 @@ namespace YTFC
             {
                 CopyToClipboard.BackgroundImage = Properties.Resources.mod;
 
-                if (!File.Exists("YTFCMessage.txt")) File.WriteAllText("YTFCMessage.txt", "Mod note: Retimed to $delta$ (from $start$ to $end$ at $fps$ FPS).");
-                string msg = File.ReadAllText("YTFCMessage.txt");
+                if (!File.Exists("YTFC_custom.txt")) File.WriteAllText("YTFC_custom.txt", "Mod note: Retimed to $delta$ (from $start$ to $end$ at $fps$ FPS).");
+                string msg = File.ReadAllText("YTFC_custom.txt");
 
                 if (msg.Contains("$start$")) msg = msg.Replace("$start$", StartTime.Text);
                 if (msg.Contains("$end$")) msg = msg.Replace("$end$", EndTime.Text);
