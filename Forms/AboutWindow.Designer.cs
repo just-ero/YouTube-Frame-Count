@@ -240,7 +240,7 @@ namespace YTFC
             this.CreditsLabel.Size = new System.Drawing.Size(146, 28);
             this.CreditsLabel.TabIndex = 1;
             this.CreditsLabel.TabStop = true;
-            this.CreditsLabel.Text = "YouTube Frame Count (v1.1)\r\nCreated by Ero";
+            this.CreditsLabel.Text = "YouTube Frame Count (v1.2)\r\nCreated by Ero";
             this.CreditsLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.CreditsLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CreditsLabel_LinkClicked);
             // 
