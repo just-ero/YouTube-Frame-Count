@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,87 +14,74 @@ namespace YTFC
         {
             InitializeComponent();
 
-            VideoLink.ContextMenuStrip = ContextMenu;
-
             try
             {
-                WebClient webClient = new WebClient();
-                webClient.Headers.Add("User-Agent", "YTFC");
+                Version thisVer = new Version(Application.ProductVersion);
+                string thisVersionNumber = $"{thisVer.Major}.{thisVer.Minor}";
+                string gitHubVersionNumber = thisVersionNumber;
 
-                string tagEntry = "\"tag_name\":";
-                string repo = "/just-ero/YouTube-Frame-Count/releases/latest";
-                string json = webClient.DownloadString("https://api.github.com/repos" + repo);
-                string newVersion = json.Substring(json.IndexOf(tagEntry) + tagEntry.Length + 2, 3);
+                try
+                {
+                    using (WebClient webClient = new WebClient())
+                    {
+                        webClient.Headers.Add("User-Agent", "YTFC");
+                        string json = webClient.DownloadString("https://api.github.com/repos/just-ero/YouTube-Frame-Count/releases/latest");
+                        string tagEntry =
+                            json.Split(',')
+                            .Where(s => s.Contains("tag_name")).First()
+                            .Replace("\"", "").Replace("v", "").Trim();
+                        string tag = tagEntry.Split(':')[1];
 
-                Version ver = new Version(Application.ProductVersion);
-                string oldVersion = $"{ver.Major}.{ver.Minor}";
+                        gitHubVersionNumber = tag;
+                    }
+                }
+                catch { }
 
-                if (oldVersion != newVersion) {
-                    NewVersion.Text = $"New version (v{newVersion}) available!";
+                if (thisVersionNumber != gitHubVersionNumber) {
+                    NewVersion.Text = $"New version (v{gitHubVersionNumber}) available!";
                     NewVersion.Visible = true;
-                    NewVersion.LinkClicked += (object s, LinkLabelLinkClickedEventArgs e) => Process.Start("http://github.com" + repo);
+                    NewVersion.LinkClicked += (s, e) => Process.Start("http://github.com/just-ero/YouTube-Frame-Count/releases/latest");
                 }
             }
             catch { }
         }
 
-        private float EnteredStartTime, EnteredEndTime, DeltaNoOffset, DeltaOffset;
-        private string StartVideoID, EndVideoID;
-        private int EnteredFPS;
-
         private void StartEnd_KeyDown(object sender, KeyEventArgs e)
         {
+            TextBox Tb = sender as TextBox;
+
             if (!(e.Control && e.KeyCode == Keys.V)) return;
 
-            var DebugData = FormatDebugString(Clipboard.GetText());
-            if (DebugData == null) return;
+            DebugExtractor Data = new DebugExtractor { DebugString = Clipboard.GetText() };
+            if (Data.FormattedData == null) return;
 
-            if ((TextBox)sender == StartTime)
+            SavedData[Tb.Name] = Data.Seconds;
+            SavedData["FPS"] = Data.FPS;
+            SavedData["VideoID"] = Data.ID;
+
+            Tb.Text = FormatToTime(Data.Seconds);
+
+            if (String.IsNullOrEmpty(VideoLink.Text))
             {
-                EnteredStartTime = DebugData["seconds"] - (DebugData["seconds"] % (1f / (float)DebugData["fps"]));
-                StartVideoID = DebugData["vidID"];
-                EnteredFPS = DebugData["fps"];
-
-                if (!String.IsNullOrEmpty(EndVideoID) && StartVideoID != EndVideoID) return;
-                if (String.IsNullOrEmpty(VideoLink.Text))
-                {
-                    VideoLink.Text = $"youtu.be/{StartVideoID}?t={(int)DebugData["seconds"]}";
-                    VideoLink.Visible = true;
-                }
-
-                StartTime.Text = FormatToTime(EnteredStartTime);
-            }
-            else if ((TextBox)sender == EndTime)
-            {
-                EnteredEndTime = DebugData["seconds"] - (DebugData["seconds"] % (1f / (float)DebugData["fps"]));
-                EndVideoID = DebugData["vidID"];
-                EnteredFPS = DebugData["fps"];
-
-                if (!String.IsNullOrEmpty(StartVideoID) && StartVideoID != EndVideoID) return;
-                if (String.IsNullOrEmpty(VideoLink.Text))
-                {
-                    VideoLink.Text = $"youtu.be/{EndVideoID}?t={(int)DebugData["seconds"]}";
-                    VideoLink.Visible = true;
-                }
-
-                EndTime.Text = FormatToTime(EnteredEndTime);
+                VideoLink.Text = $"youtu.be/{Data.ID}?t={(int)Data.Seconds}";
+                VideoLink.Visible = true;
             }
 
-            if (new[] { StartTime.Text, EndTime.Text }.All(text => !String.IsNullOrEmpty(text)))
-            {
-                DeltaNoOffset = EnteredEndTime - EnteredStartTime;
-                DeltaOffset = DeltaNoOffset + (float)Offset.Value;
-                DeltaTime.Text = FormatToTime(DeltaOffset);
+            if (SavedData["EndTime"] < SavedData["StartTime"]) return;
 
-                Offset.Minimum = (decimal)-DeltaNoOffset;
-                Offset.Maximum = (decimal)(43200 - DeltaNoOffset);
-            }
+            float delta = SavedData["EndTime"] - SavedData["StartTime"];
+
+            SavedData["Delta"] = delta;
+            DeltaTime.Text = FormatToTime(SavedData["Delta"] + (float)Offset.Value);
+
+            Offset.Minimum = (decimal)-delta;
+            Offset.Maximum = (decimal)(43200 - delta);
         }
 
         private void TimeFormat_CheckedChanged(object sender, EventArgs e)
         {
             TextBox[] tBoxes = { StartTime, EndTime, DeltaTime };
-            float[] values = { EnteredStartTime, EnteredEndTime, DeltaOffset };
+            float[] values = { SavedData["StartTime"], SavedData["EndTime"], SavedData["Delta"] + (float)Offset.Value };
 
             for (int i = 0; i < tBoxes.Length; ++i)
                 if (!String.IsNullOrEmpty(tBoxes[i].Text))
@@ -103,13 +90,13 @@ namespace YTFC
 
         private void About_Click(object sender, EventArgs e)
         {
-            new AboutWindow { Location = new Point(Location.X + Width, Location.Y), StartPosition = FormStartPosition.Manual }
-            .ShowDialog();
+            new AboutWindow().ShowDialog();
         }
 
         private void ClearAll_Click(object sender, EventArgs e)
         {
-            EnteredStartTime = EnteredEndTime = DeltaNoOffset = DeltaOffset = 0;
+            SavedData["StartTime"] = SavedData["EndTime"] = SavedData["Delta"] = SavedData["FPS"] = 0;
+            SavedData["VideoID"] = String.Empty;
 
             StartTime.Clear();
             EndTime.Clear();
@@ -134,13 +121,13 @@ namespace YTFC
                 CopyToClipboard.BackgroundImage = Properties.Resources.mod;
 
                 if (!File.Exists("YTFC_custom.txt")) File.WriteAllText("YTFC_custom.txt", "Mod note: Retimed to $delta$ (from $start$ to $end$ at $fps$ FPS).");
-                string msg = File.ReadAllText("YTFC_custom.txt");
-
-                if (msg.Contains("$start$")) msg = msg.Replace("$start$", StartTime.Text);
-                if (msg.Contains("$end$")) msg = msg.Replace("$end$", EndTime.Text);
-                if (msg.Contains("$delta$")) msg = msg.Replace("$delta$", DeltaTime.Text);
-                if (msg.Contains("$fps$")) msg = msg.Replace("$fps$", EnteredFPS.ToString());
-                if (msg.Contains("$offset$")) msg = msg.Replace("$offset$", Offset.Value.ToString("0.000"));
+                string msg =
+                    File.ReadAllText("YTFC_custom.txt")
+                    .Replace("$start$", StartTime.Text)
+                    .Replace("$end$", EndTime.Text)
+                    .Replace("$delta$", DeltaTime.Text)
+                    .Replace("$fps$", SavedData["FPS"].ToString())
+                    .Replace("$offset$", Offset.Value.ToString("0.000"));
 
                 Clipboard.SetText(msg);
             }
@@ -153,9 +140,7 @@ namespace YTFC
 
         private void Offset_ValueChanged(object sender, EventArgs e)
         {
-            DeltaOffset = DeltaNoOffset + (float)Offset.Value;
-
-            DeltaTime.Text = FormatToTime(DeltaOffset);
+            DeltaTime.Text = FormatToTime(SavedData["Delta"] + (float)Offset.Value);
         }
 
         private void VideoLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -167,5 +152,14 @@ namespace YTFC
         {
             Clipboard.SetText(VideoLink.Text);
         }
+
+        private Dictionary<string, dynamic> SavedData = new Dictionary<string, dynamic>
+        {
+            { "StartTime", 0f },
+            { "EndTime", 0f },
+            { "Delta", 0f },
+            { "FPS", 0 },
+            { "VideoID", String.Empty }
+        };
     }
 }
