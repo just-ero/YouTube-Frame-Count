@@ -140,6 +140,8 @@ namespace YTFC
 
         private void Offset_ValueChanged(object sender, EventArgs e)
         {
+            if (SavedData["EndTime"] <= SavedData["StartTime"]) return;
+
             DeltaTime.Text = FormatToTime(SavedData["Delta"] + (float)Offset.Value);
         }
 
@@ -151,6 +153,11 @@ namespace YTFC
         private void ContextMenuCopyLink_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(VideoLink.Text);
+        }
+
+        private void ResetToZero_Click(object sender, EventArgs e)
+        {
+            Offset.Value = (decimal)0.000;
         }
 
         private Dictionary<string, dynamic> SavedData = new Dictionary<string, dynamic>

@@ -46,15 +46,18 @@ namespace YTFC
             this.NewVersion = new System.Windows.Forms.LinkLabel();
             this.Offset = new System.Windows.Forms.NumericUpDown();
             this.CopyToClipboard = new System.Windows.Forms.Button();
-            this.ContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CopyLinkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ContextMenuCopyLink = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResetToZero = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ResetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             DeltaTimeLabel = new System.Windows.Forms.Label();
             EndTimeLabel = new System.Windows.Forms.Label();
             StartTimeLabel = new System.Windows.Forms.Label();
             Separator = new System.Windows.Forms.Panel();
             OffsetLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Offset)).BeginInit();
-            this.ContextMenu.SuspendLayout();
+            this.CopyLinkMenu.SuspendLayout();
+            this.ResetToZero.SuspendLayout();
             this.SuspendLayout();
             // 
             // DeltaTimeLabel
@@ -108,6 +111,7 @@ namespace YTFC
             // VideoLink
             // 
             this.VideoLink.ActiveLinkColor = System.Drawing.Color.Crimson;
+            this.VideoLink.ContextMenuStrip = this.CopyLinkMenu;
             this.VideoLink.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.VideoLink.Location = new System.Drawing.Point(6, 146);
             this.VideoLink.Name = "VideoLink";
@@ -128,6 +132,7 @@ namespace YTFC
             this.DeltaTime.TabIndex = 7;
             this.DeltaTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ToolTip.SetToolTip(this.DeltaTime, "Difference between start and end.");
+            this.DeltaTime.WordWrap = false;
             // 
             // EndTime
             // 
@@ -138,6 +143,7 @@ namespace YTFC
             this.EndTime.Size = new System.Drawing.Size(150, 26);
             this.EndTime.TabIndex = 6;
             this.EndTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.EndTime.WordWrap = false;
             this.EndTime.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StartEnd_KeyDown);
             // 
             // StartTime
@@ -149,6 +155,7 @@ namespace YTFC
             this.StartTime.Size = new System.Drawing.Size(150, 26);
             this.StartTime.TabIndex = 5;
             this.StartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.StartTime.WordWrap = false;
             this.StartTime.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StartEnd_KeyDown);
             // 
             // TimeFormat
@@ -202,6 +209,7 @@ namespace YTFC
             // Offset
             // 
             this.Offset.BackColor = System.Drawing.SystemColors.Control;
+            this.Offset.ContextMenuStrip = this.ResetToZero;
             this.Offset.DecimalPlaces = 3;
             this.Offset.Font = new System.Drawing.Font("Arial", 10F);
             this.Offset.ForeColor = System.Drawing.SystemColors.ControlDark;
@@ -230,12 +238,12 @@ namespace YTFC
             this.CopyToClipboard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CopyToClipboard_MouseDown);
             this.CopyToClipboard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CopyToClipboard_MouseUp);
             // 
-            // ContextMenu
+            // CopyLinkMenu
             // 
-            this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CopyLinkMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ContextMenuCopyLink});
-            this.ContextMenu.Name = "ContextMenu";
-            this.ContextMenu.Size = new System.Drawing.Size(181, 48);
+            this.CopyLinkMenu.Name = "ContextMenu";
+            this.CopyLinkMenu.Size = new System.Drawing.Size(128, 26);
             // 
             // ContextMenuCopyLink
             // 
@@ -243,6 +251,20 @@ namespace YTFC
             this.ContextMenuCopyLink.Size = new System.Drawing.Size(180, 22);
             this.ContextMenuCopyLink.Text = "Copy Link";
             this.ContextMenuCopyLink.Click += new System.EventHandler(this.ContextMenuCopyLink_Click);
+            // 
+            // ResetToZero
+            // 
+            this.ResetToZero.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ResetMenuItem});
+            this.ResetToZero.Name = "ResetToZero";
+            this.ResetToZero.Size = new System.Drawing.Size(181, 48);
+            this.ResetToZero.Click += new System.EventHandler(this.ResetToZero_Click);
+            // 
+            // ResetMenuItem
+            // 
+            this.ResetMenuItem.Name = "ResetMenuItem";
+            this.ResetMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.ResetMenuItem.Text = "Reset to 0";
             // 
             // RetimeForm
             // 
@@ -277,7 +299,8 @@ namespace YTFC
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YouTube Frame Count";
             ((System.ComponentModel.ISupportInitialize)(this.Offset)).EndInit();
-            this.ContextMenu.ResumeLayout(false);
+            this.CopyLinkMenu.ResumeLayout(false);
+            this.ResetToZero.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,8 +318,10 @@ namespace YTFC
         private System.Windows.Forms.Button About;
         private System.Windows.Forms.LinkLabel NewVersion;
         private System.Windows.Forms.NumericUpDown Offset;
-        private System.Windows.Forms.ContextMenuStrip ContextMenu;
+        private System.Windows.Forms.ContextMenuStrip CopyLinkMenu;
         private System.Windows.Forms.ToolStripMenuItem ContextMenuCopyLink;
+        private System.Windows.Forms.ContextMenuStrip ResetToZero;
+        private System.Windows.Forms.ToolStripMenuItem ResetMenuItem;
     }
 }
 
