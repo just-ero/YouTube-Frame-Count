@@ -61,13 +61,18 @@ namespace YTFC
 
             Tb.Text = FormatToTime(Data.Seconds);
 
-            if (String.IsNullOrEmpty(VideoLink.Text))
+            if (Tb == StartTime)
             {
                 VideoLink.Text = $"youtu.be/{Data.ID}?t={(int)Data.Seconds}";
                 VideoLink.Visible = true;
             }
 
-            if (SavedData["EndTime"] < SavedData["StartTime"]) return;
+            if (SavedData["EndTime"] < SavedData["StartTime"])
+            {
+                DeltaTime.Clear();
+                Offset.Value = (decimal)0.000;
+                return;
+            }
 
             float delta = SavedData["EndTime"] - SavedData["StartTime"];
 
