@@ -1,3 +1,5 @@
+Pull requests are welcome.
+
 # YouTube Frame Count
 This tool is meant to be an improvement upon [Slush Puppy's Retime Tool](https://github.com/Slush0Puppy/retime), aimed at a slightly broader audience. This tool operates similarly, but is much more lightweight, pretty, and user friendly.  
 
